@@ -1,0 +1,54 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath(
+      [group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: SPRING_BOOT_VERSION]
+    )
+  }
+}
+
+apply plugin: 'idea'        // http://www.gradle.org/docs/current/userguide/idea_plugin.html
+apply plugin: 'java'        // http://www.gradle.org/docs/current/userguide/java_plugin.html
+apply plugin: 'spring-boot' // https://spring.io/guides/gs/spring-boot/
+
+// http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
+repositories {
+  jcenter()
+}
+dependencies {
+  compile(
+    [group: 'com.google.code.gson',     name: 'gson',                          version: GSON_VERSION],
+    [group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc',      version: SPRING_BOOT_VERSION],
+    [group: 'org.springframework.boot', name: 'spring-boot-starter-web',       version: SPRING_BOOT_VERSION],
+    [group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version: SPRING_BOOT_VERSION]
+  )
+
+  runtime(
+    [group: 'com.h2database', name: 'h2', version: H2_VERSION]
+  )
+}
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+// http://www.gradle.org/docs/current/userguide/idea_plugin.html
+// http://www.gradle.org/docs/current/dsl/org.gradle.plugins.ide.idea.model.IdeaProject.html
+// http://www.gradle.org/docs/current/dsl/org.gradle.plugins.ide.idea.model.IdeaModule.html
+idea {
+  project {
+    jdkName = '1.8'
+    languageLevel = '1.8'
+  }
+  module {
+    name = "auction"
+    downloadJavadoc = true
+    downloadSources = true
+  }
+}
+
+// http://www.gradle.org/docs/current/userguide/gradle_wrapper.html
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2.1'
+}
